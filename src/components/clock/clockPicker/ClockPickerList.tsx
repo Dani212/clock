@@ -3,13 +3,14 @@ import { FlatList, View } from 'react-native';
 
 import moment from 'moment';
 
-import { Timezones } from 'consts';
+import { CityItemHeight, Timezones } from 'consts';
 // import { Text } from 'components';
 import CityItem from './CityItem';
 
 type Props = {
 	dark: boolean;
 	country: typeof Timezones;
+	onEndReached?: () => void;
 	itemPressed: (item: typeof Timezones[0]) => void;
 };
 
@@ -52,26 +53,30 @@ export class ClockPickerList extends Component<Props> {
 	// keyExtractor = (item: typeof Timezones[0]) => item.country_code;
 	keyExtractor = () => Math.random().toString(36).substr(2, 10);
 
-	// getItemLayout = (_: unknown, index: number) => ({
-	// 	length: CityItemHeight,
-	// 	offset: CityItemHeight * index,
-	// 	index,
-	// });
+	getItemLayout = (_: unknown, index: number) => ({
+		length: CityItemHeight,
+		offset: CityItemHeight * index,
+		index,
+	});
 
 	render() {
 		return (
 			<FlatList
 				// data={Timezones}
-				// removeClippedSubviews
+				windowSize={11}
 				disableVirtualization
-				initialNumToRender={15}
-				maxToRenderPerBatch={20}
+				initialNumToRender={13}
+				// maxToRenderPerBatch={15}
 				data={this.props.country}
 				style={{ paddingTop: 18 }}
+				// updateCellsBatchingPeriod={25}
 				renderItem={this.renderItem}
+				removeClippedSubviews={false}
 				keyExtractor={this.keyExtractor}
-				// getItemLayout={this.getItemLayout}
-				extraData={[this.props.dark, this.props.country]}
+				keyboardShouldPersistTaps={'always'}
+				onEndReached={this.props.onEndReached}
+				getItemLayout={this.getItemLayout}
+				extraData={[this.props.dark]}
 				ListFooterComponent={() => <View style={{ height: 30 }} />}
 			/>
 		);
