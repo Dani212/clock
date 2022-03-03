@@ -21,6 +21,13 @@ const clockSlice = createSlice({
 
 			if (index < 0) {
 				state.clockList.unshift(action.payload);
+			} else {
+				const result = [...state.clockList];
+
+				result.splice(index, 1);
+				result.unshift(action.payload);
+
+				state.clockList = [...result];
 			}
 		},
 		removeClocks: (state, action: PayloadAction<string[]>) => {
