@@ -22,6 +22,7 @@ const ClockCoutriesSearch: FC = () => {
 
 	const [sortedByCapital, setSortedByCapital] = useState<typeof Timezones>([]);
 	const [country, setCountry] = useState<typeof Timezones>([]);
+	// const listSize = useRef<number>(13);
 
 	useLayoutEffect(() => {
 		const sortedResult = Timezones.sort((a, b) => {
@@ -36,7 +37,7 @@ const ClockCoutriesSearch: FC = () => {
 			}
 			return 0;
 		});
-		// const result = sortedResult.slice(0, 43);
+		// const result = sortedResult.slice(0, 15);
 		setCountry(sortedResult);
 		setSortedByCapital(sortedResult);
 	}, []);
@@ -62,7 +63,15 @@ const ClockCoutriesSearch: FC = () => {
 		goBack();
 	};
 
-	console.log(country.length);
+	const onEndReached = () => {
+		// if (listSize.current < country.length) {
+		// 	const result = sortedByCapital.slice(
+		// 		listSize.current,
+		// 		listSize.current + 10
+		// 	);
+		// 	setCountry((prevState) => [...prevState, ...result]);
+		// }
+	};
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -76,6 +85,7 @@ const ClockCoutriesSearch: FC = () => {
 				dark={dark}
 				country={country}
 				itemPressed={itemPressed}
+				onEndReached={onEndReached}
 			/>
 		</SafeAreaView>
 	);
