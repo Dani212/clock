@@ -48,6 +48,7 @@ export function BottomTabNavigator() {
 				component={TabOneScreen}
 				options={{
 					title: 'Stopwatch',
+					headerShown: false,
 					headerShadowVisible: false,
 					headerTitleStyle: styles.text,
 					headerStyle: { backgroundColor: colors.background },
