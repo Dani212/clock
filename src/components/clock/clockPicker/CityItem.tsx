@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, View, ViewStyle } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 
 import { pColor } from 'utils';
 import { CityItemHeight } from 'consts';
@@ -35,7 +35,7 @@ export default class CityItem extends Component<Props> {
 					containerStyle,
 				]}
 			>
-				<TouchableOpacity
+				<Pressable
 					style={[
 						{
 							borderBottomColor: pColor(dark).dividerLine,
@@ -45,13 +45,13 @@ export default class CityItem extends Component<Props> {
 							height: '100%',
 						},
 					]}
-					// onPress={onPress}
+					onPress={onPress}
 				>
 					<Text>{city}</Text>
 					<Text textSize="small" style={{ color: pColor(dark).disableText }}>
 						{gmt}
 					</Text>
-				</TouchableOpacity>
+				</Pressable>
 			</View>
 		);
 	}
