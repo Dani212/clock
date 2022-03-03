@@ -73,8 +73,8 @@ const ClockScreen = ({ navigation }: RootTabScreenProps<'ClockScreen'>) => {
 	);
 
 	const onPressAdd = () => {
-		// navigate('ClockPickerScreen');
-		navigate('TimerConverterScreen');
+		navigate('ClockPickerScreen');
+		// navigate('TimerConverterScreen');
 	};
 
 	const onPressEllipsis = () => {
@@ -142,13 +142,6 @@ const ClockScreen = ({ navigation }: RootTabScreenProps<'ClockScreen'>) => {
 				onLongPress={onLongPress}
 				checkedItems={clockCheckedList}
 				isScrolling={isScrolling.value}
-				// clockList={[
-				// 	Timezones[0],
-				// 	Timezones[1],
-				// 	Timezones[3],
-				// 	Timezones[4],
-				// 	Timezones[5],
-				// ]}
 				onPressChecked={onPressChecked}
 			/>
 		</SafeAreaView>
