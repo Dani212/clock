@@ -34,6 +34,8 @@ export const PresetsComponent: FC = () => {
 	// this are items that are selected when items editable is true.
 	const checkedPresetItems = useSelector(timerEditableItemsState);
 
+	const isInitailRendering = useRef(true);
+
 	const {
 		dispatch: contextDispatch,
 		state: { selectedPresetItem, inputIsFocused, timerStart },
@@ -41,10 +43,15 @@ export const PresetsComponent: FC = () => {
 
 	useEffect(() => {
 		if (presetList.length - 1 > -1 && presetList.length > 3)
-			flatListRef.current?.scrollToIndex({
-				animated: true,
-				index: presetList.length - 1,
-			});
+			!isInitailRendering.current &&
+				flatListRef.current?.scrollToIndex({
+					animated: true,
+					viewPosition: 1,
+					viewOffset: -32,
+					index: presetList.length - 1,
+				});
+
+		isInitailRendering.current = false;
 	}, [presetList]);
 
 	const onPresetItemLongPress = (id: string) => {
@@ -117,12 +124,13 @@ export const PresetsComponent: FC = () => {
 			renderItem={renderItem}
 			keyExtractor={keyExtractor}
 			getItemLayout={getItemLayout}
+			removeClippedSubviews={false}
 			showsHorizontalScrollIndicator={false}
 			style={{
 				alignSelf: 'center',
 				paddingStart: 16,
 			}}
-			contentOffset={{ x: 500, y: 0 }}
+			contentOffset={{ x: 8, y: 0 }}
 			ListFooterComponent={
 				presetList.length < 3 ? undefined : () => <View style={{ width: 30 }} />
 			}
