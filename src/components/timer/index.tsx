@@ -68,7 +68,6 @@ const Index = () => {
 	};
 
 	const stopOverTimer = () => {
-		console.log('stop');
 		dispatch({ type: 'updateTimerEnded', payload: false });
 		dispatch({ type: 'updateTimerStart', payload: false });
 	};
