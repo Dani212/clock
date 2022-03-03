@@ -30,7 +30,7 @@ export class ClockPickerList extends Component<Props> {
 		index: number;
 	}) => {
 		const { country, dark, itemPressed } = this.props;
-		const topBorderRadius = index === country.length - 1 ? 32 : 0;
+		const topBorderRadius = index === 0 ? 32 : 0;
 		const bottomBorderRadius = index === country.length - 1 ? 32 : 0;
 
 		return (
