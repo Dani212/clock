@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { View, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -17,6 +17,14 @@ export const ClockPickerHeader: FC<Props> = ({
 	onChangeText,
 	goBackPressed,
 }) => {
+	const inputRef = useRef<TextInput>(null);
+
+	useEffect(() => {
+		setTimeout(() => {
+			inputRef.current?.focus();
+		}, 500);
+	}, []);
+
 	return (
 		<View
 			style={[
@@ -39,6 +47,7 @@ export const ClockPickerHeader: FC<Props> = ({
 				<Ionicons name="arrow-back" size={24} color={pColor(dark).text} />
 			</Pressable>
 			<TextInput
+				ref={inputRef}
 				onChangeText={onChangeText}
 				underlineColorAndroid={'transparent'}
 				placeholder="Search capital / country"
