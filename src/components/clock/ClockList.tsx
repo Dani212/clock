@@ -11,7 +11,7 @@ import moment from 'moment';
 import { ClockItem } from '.';
 import { height } from 'consts';
 import { ClockListProps } from 'types';
-import { formatedTimezoneDiff } from 'utils';
+import { calFooterHeight, formatedTimezoneDiff } from 'utils';
 
 type Props = {
 	editable: boolean;
@@ -67,23 +67,12 @@ class ClockList extends PureComponent<Props, State> {
 
 	keyExtractor = (item: ClockListProps) => String(item.capital);
 
-	calFooterHeight = () => {
-		const len = this.props.clockList.length;
-
-		if (len === 0) return height * 0.9;
-		if (len === 1) return height * 0.7;
-		if (len === 2) return height * 0.53;
-		if (len === 3) return height * 0.4;
-		if (len === 4) return height * 0.2;
-		if (len === 5) return height * 0.08;
-		if (len > 6) return height * 0.03;
-	};
-
 	render() {
 		return (
 			<FlatList
 				removeClippedSubviews
-				initialNumToRender={15}
+				initialNumToRender={10}
+				maxToRenderPerBatch={15}
 				data={this.props.clockList}
 				renderItem={this.renderItem}
 				onScroll={this.props.onScroll}
@@ -91,7 +80,9 @@ class ClockList extends PureComponent<Props, State> {
 				extraData={[this.props.editable]}
 				ListHeaderComponent={() => <View style={{ height: height * 0.42 }} />}
 				ListFooterComponent={() => (
-					<View style={{ height: this.calFooterHeight() }} />
+					<View
+						style={{ height: calFooterHeight(this.props.clockList.length) }}
+					/>
 				)}
 			/>
 		);
