@@ -25,13 +25,8 @@ export const formatedTimezoneDiff = (timezone: string) => {
 };
 
 export const calFooterHeight = (len: number) => {
-	const dividerNum = 708;
-	if (len === 0) return dividerNum;
-	if (len === 1) return dividerNum - 118;
-	if (len === 2) return dividerNum - 118 * 2;
-	if (len === 3) return dividerNum - 125 * 3;
-	if (len === 4) return dividerNum - 125 * 4;
-	if (len === 5) return dividerNum - 129 * 5;
+	const dividerNum = height - 44 - 128.4 / 2;
+	// const dividerNum = 770 - 128.4 / 2;
 
-	if (len > 6) return height * 0.03;
+	return len < 6 ? dividerNum - len * 128.4 : height * 0.01;
 };
