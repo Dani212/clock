@@ -1,4 +1,4 @@
-import React, { FC, useLayoutEffect, useState } from 'react';
+import React, { FC, useEffect, useLayoutEffect, useState } from 'react';
 import {
 	NavigationProp,
 	useNavigation,
@@ -24,7 +24,7 @@ const ClockCoutriesSearch: FC = () => {
 	const [country, setCountry] = useState<typeof Timezones>([]);
 	// const listSize = useRef<number>(13);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		const sortedResult = Timezones.sort((a, b) => {
 			const fa = a.capital.toLowerCase(),
 				fb = b.capital.toLowerCase();
