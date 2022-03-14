@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Pressable } from 'components';
 import { styles } from 'styles';
 import { pColor } from 'utils';
+import { width } from 'consts';
 
 type Props = {
 	dark: boolean;
@@ -54,7 +55,11 @@ export const ClockPickerHeader: FC<Props> = ({
 				placeholderTextColor={pColor(dark).disableText}
 				style={[
 					styles.text,
-					{ marginHorizontal: 18, color: pColor(dark).text },
+					{
+						marginHorizontal: 18,
+						color: pColor(dark).text,
+						width: width * 0.75,
+					},
 				]}
 			/>
 		</View>
