@@ -19,10 +19,7 @@ export const styles = StyleSheet.create({
 		borderRadius: 10,
 	},
 	bottomTabText: {
-		borderBottomWidth: 2,
-		paddingTop: 4,
 		paddingBottom: 0,
-		// marginBottom: 8,
 		overflow: 'hidden',
 	},
 	buttonCon: {
