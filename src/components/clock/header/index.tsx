@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 import { useTheme } from '@react-navigation/native';
 
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -16,7 +16,6 @@ import Animated, {
 
 import { height } from 'consts';
 import { styles } from 'styles';
-import { pColor } from 'utils';
 
 import { BottomTabHeaderRight, Pressable, RadioButton, Text } from 'components';
 
@@ -25,6 +24,7 @@ import {
 	clockListState,
 	clockEditableItemsState,
 	removeOrCheckAllClockItems,
+	updateEditable,
 } from 'reduxStore';
 import { Time } from './Time';
 
@@ -41,7 +41,7 @@ const ClockHeader: FC<Props> = ({
 	onPressAdd,
 	onPressEllipsis,
 }) => {
-	const { dark } = useTheme();
+	const { dark, colors } = useTheme();
 
 	const dispatch = useDispatch();
 
@@ -105,12 +105,17 @@ const ClockHeader: FC<Props> = ({
 		dispatch(removeOrCheckAllClockItems(result));
 	};
 
+	const onDonePressed = () => {
+		dispatch(updateEditable({ data: false, screen: 'clock' }));
+		dispatch(removeOrCheckAllClockItems([]));
+	};
+
 	return (
 		<Animated.View
 			style={[
 				animatedHeaderStyle,
 				styles.spanHeader,
-				{ backgroundColor: pColor(dark).background },
+				{ backgroundColor: colors.background },
 			]}
 		>
 			<Animated.View style={[animatedLargeTitleStyle]}>
@@ -132,6 +137,7 @@ const ClockHeader: FC<Props> = ({
 					{editable && (
 						<Animated.View entering={ZoomIn} style={{ marginEnd: 18 }}>
 							<Pressable
+								ripple_raduis={20}
 								onPress={checkAllPressed}
 								style={{
 									alignItems: 'center',
@@ -149,13 +155,21 @@ const ClockHeader: FC<Props> = ({
 				</View>
 
 				<View>
-					{!editable && (
+					{!editable ? (
 						<BottomTabHeaderRight
 							activeScreen={'alarm'}
 							onPressAdd={onPressAdd}
 							onPressEllipsis={onPressEllipsis}
 						/>
-					)}
+					) : Platform.OS === 'ios' ? (
+						<Pressable
+							ripple_raduis={27}
+							onPress={onDonePressed}
+							style={{ marginHorizontal: 16, paddingHorizontal: 6 }}
+						>
+							<Text>Done</Text>
+						</Pressable>
+					) : null}
 				</View>
 			</View>
 		</Animated.View>
