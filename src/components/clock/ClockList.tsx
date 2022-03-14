@@ -70,14 +70,15 @@ class ClockList extends PureComponent<Props, State> {
 	render() {
 		return (
 			<FlatList
-				removeClippedSubviews
 				initialNumToRender={10}
 				maxToRenderPerBatch={15}
 				data={this.props.clockList}
 				renderItem={this.renderItem}
+				removeClippedSubviews={false}
 				onScroll={this.props.onScroll}
 				keyExtractor={this.keyExtractor}
 				extraData={[this.props.editable]}
+				showsVerticalScrollIndicator={this.props.clockList.length > 5}
 				ListHeaderComponent={() => <View style={{ height: height * 0.42 }} />}
 				ListFooterComponent={() => (
 					<View
