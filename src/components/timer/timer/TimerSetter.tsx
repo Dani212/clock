@@ -70,6 +70,9 @@ export const TimerSetter: FC = () => {
 					goToNextInput={() => {
 						// refName.current?.focus();
 					}}
+					onSubmitEditingSecs={() => {
+						Keyboard.dismiss();
+					}}
 					hours={hoursInput}
 					minutes={minutesInput}
 					seconds={secondsInput}
