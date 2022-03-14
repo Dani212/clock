@@ -25,13 +25,14 @@ export const BottomTabHeaderRight: FC<BottomTabHeaderRightProps> = ({
 					ripple_raduis={20}
 					style={{
 						paddingVertical: 5,
+						marginHorizontal: 18,
 					}}
 				>
 					<Ionicons
 						name="add"
-						color={pColor(dark).text}
 						size={32}
-						style={{ paddingHorizontal: 18 }}
+						color={pColor(dark).text}
+						style={{ margin: 4 }}
 					/>
 				</Pressable>
 			)}
