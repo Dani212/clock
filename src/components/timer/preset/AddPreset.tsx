@@ -4,6 +4,7 @@ import {
 	TextInput,
 	StyleSheet,
 	KeyboardAvoidingView,
+	Platform,
 } from 'react-native';
 
 import { pColor } from 'utils';
@@ -220,6 +221,7 @@ const AddPresetComponent: FC<Props> = ({ dark, close }) => {
 				}}
 			/>
 			<KeyboardAvoidingView
+				behavior={Platform.OS === 'ios' ? 'padding' : undefined}
 				style={[
 					timerStyle.APContentContainer,
 					{ backgroundColor: pColor(dark).backgroundTwo },
@@ -251,6 +253,7 @@ const AddPresetComponent: FC<Props> = ({ dark, close }) => {
 					ref={refName}
 					placeholder="Preset timer name"
 					onChangeText={onChangeTextName}
+					defaultValue={presetName.current}
 					placeholderTextColor={pColor(dark).disableText}
 					style={{
 						...styles.text,
