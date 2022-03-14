@@ -51,7 +51,9 @@ export const MyTabBar = ({
 	const clockCheckedList = useSelector(clockEditableItemsState);
 
 	const editBtn = () => {
+		console.log('first test');
 		dispatch(openPresetEdit(true));
+		// dispatch(removeOrCheckAllPEI([]));
 	};
 
 	const deleteBtn = () => {
