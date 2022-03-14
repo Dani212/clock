@@ -6,6 +6,8 @@ import {
 	Platform,
 	Pressable as DefaultPressable,
 	PressableProps,
+	StyleProp,
+	ViewStyle,
 } from 'react-native';
 import React, { FC } from 'react';
 import { pColor } from 'utils';
@@ -14,11 +16,13 @@ import { useTheme } from '@react-navigation/native';
 interface Props extends PressableProps {
 	ripple_raduis?: number;
 	ripple_color?: string;
+	style?: StyleProp<ViewStyle>;
 }
 
 export const Pressable: FC<Props> = ({
 	ripple_raduis,
 	ripple_color,
+	style,
 	...otherProps
 }) => {
 	const { dark } = useTheme();
@@ -31,16 +35,14 @@ export const Pressable: FC<Props> = ({
 				radius: ripple_raduis,
 			}}
 			style={({ pressed }) => [
-				{
+				style,
+				pressed && {
 					...Platform.select({
 						ios: {
 							backgroundColor: pressed ? pColor(dark).pressed : undefined,
-						},
-						android: {
-							backgroundColor: pressed ? pColor(dark).pressed : undefined,
+							borderRadius: ripple_raduis,
 						},
 					}),
-					paddingVertical: 10,
 				},
 			]}
 			{...otherProps}
