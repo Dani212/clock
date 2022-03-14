@@ -18,8 +18,8 @@ export default class CityItem extends Component<Props> {
 		super(props);
 	}
 
-	shouldComponentUpdate() {
-		return false;
+	shouldComponentUpdate(prevProps: Props) {
+		return prevProps.btnBorderBottomWidth !== this.props.btnBorderBottomWidth;
 	}
 	render() {
 		const { city, gmt, dark, onPress, containerStyle, btnBorderBottomWidth } =
