@@ -19,6 +19,7 @@ type Props = {
 	headerConStyle?: ViewStyle;
 	goToNextInput: () => void;
 	headerTextFontSize?: number;
+	onSubmitEditingSecs?: () => void;
 	type: 'alarm' | 'timer' | 'preset';
 	disableBtnFeebBack?: (disabled: boolean) => void;
 	onChangeText: (seconds: string, minutes: string, hours: string) => void;
@@ -40,6 +41,7 @@ export const TimerInput: FC<Props> = ({
 	headerConStyle,
 	disableBtnFeebBack,
 	headerTextFontSize,
+	onSubmitEditingSecs,
 }) => {
 	const textFontSize = fontSize ? fontSize : width * 0.11;
 	const hTextFontSize = headerTextFontSize ? headerTextFontSize : width * 0.04;
@@ -92,26 +94,18 @@ export const TimerInput: FC<Props> = ({
 	const onChangeSecondsText = (text: string) => {
 		if (text.length === 1 && Number(text) > 6) {
 			const result = `0${text}`;
-
 			onChangeText(result, minutesInput, hourInput);
-
-			setSecondsInput(result);
-
+			setSecondsInput(text);
 			goToNextInput();
 		} else if (text.length === 2 && Number(text) > 59) {
 			const result = '59';
-
 			onChangeText(result, minutesInput, hourInput);
-
 			setSecondsInput(result);
-
 			goToNextInput();
 		} else {
 			setSecondsInput(text);
-
 			onChangeText(text, minutesInput, hourInput);
 		}
-
 		if (text.length > 1) {
 			goToNextInput();
 		}
@@ -169,9 +163,13 @@ export const TimerInput: FC<Props> = ({
 	}, [hourInput, secondsInput, minutes]);
 
 	useEffect(() => {
-		setHourInput(hours ? hours : '00');
-		setMinutesInput(minutes ? minutes : '00');
-		setSecondsInput(seconds ? seconds : '00');
+		!hourRef.current?.isFocused() && setHourInput(hours ? hours : '00');
+
+		!minutesRef.current?.isFocused() &&
+			setMinutesInput(minutes ? minutes : '00');
+
+		!secondsRef.current?.isFocused() &&
+			setSecondsInput(seconds ? seconds : '00');
 	}, [hours, minutes, seconds]);
 
 	useEffect(() => {
@@ -299,6 +297,7 @@ export const TimerInput: FC<Props> = ({
 								styles.timerStopwatchText,
 								{ fontSize: textFontSize, color: pColor(dark).text },
 							]}
+							onSubmitEditing={onSubmitEditingSecs}
 						/>
 					</>
 				)}
