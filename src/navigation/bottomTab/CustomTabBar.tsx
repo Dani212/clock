@@ -187,21 +187,21 @@ export const MyTabBar = ({
 							android_ripple={{
 								borderless: !true,
 								color: pColor(dark).pressed,
-								radius: index === 1 ? 46 : index === 2 ? 26 : 28,
+								radius: index === 1 ? 46 : index === 2 ? 27 : 30,
 							}}
 						>
-							<Text
-								style={[
-									styles.bottomTabText,
-									{
-										borderBottomColor: isFocused
-											? pColor(dark).text
-											: 'transparent',
-									},
-								]}
+							<View
+								style={{
+									borderWidth: 2,
+									borderBottomColor: isFocused
+										? pColor(dark).text
+										: 'transparent',
+								}}
 							>
-								{label === 'WorldClock' ? 'Clock' : label}
-							</Text>
+								<Text style={[styles.bottomTabText, {}]}>
+									{label === 'WorldClock' ? 'Clock' : label}
+								</Text>
+							</View>
 						</Pressable>
 					</View>
 				);
