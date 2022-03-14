@@ -25,11 +25,11 @@ import {
 	clockEditableItemsState,
 	clockListState,
 	editableState,
+	removeOrCheckAllClockItems,
 	removeOrCheckClockItems,
 	updateEditable,
 } from 'reduxStore';
 import ClockList from 'components/clock/ClockList';
-// import { Timezones } from 'consts';
 
 const AnimatedClockList = Animated.createAnimatedComponent(ClockList);
 
@@ -57,6 +57,7 @@ const ClockScreen = ({ navigation }: RootTabScreenProps<'ClockScreen'>) => {
 	const backAction = () => {
 		if (editable) {
 			dispatch(updateEditable({ data: false, screen: 'clock' }));
+			dispatch(removeOrCheckAllClockItems([]));
 			return true;
 		} else {
 			return false;
@@ -81,7 +82,7 @@ const ClockScreen = ({ navigation }: RootTabScreenProps<'ClockScreen'>) => {
 		// console.log('test');
 		ellipsisRef.current?.open();
 	};
-	// console.log(moment.tz(new Date(), 'America/Los_Angeles').format('hh:mm'));
+
 	const scrollHandler = useAnimatedScrollHandler({
 		onScroll: (event) => {
 			translationY.value = event.contentOffset.y;
