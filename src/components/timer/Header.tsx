@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 import { useTheme } from '@react-navigation/native';
 
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -17,6 +17,7 @@ import {
 	timerEditableItemsState,
 	presetsListState,
 	removeOrCheckAllPEI,
+	updateEditable,
 } from 'reduxStore';
 
 export const TimerHeader: FC<{
@@ -52,6 +53,11 @@ export const TimerHeader: FC<{
 		dispatch(removeOrCheckAllPEI(result));
 	};
 
+	const onDonePressed = () => {
+		dispatch(updateEditable({ data: false, screen: 'clock' }));
+		dispatch(removeOrCheckAllPEI([]));
+	};
+
 	return (
 		<View style={[styles.header, { height: 80, alignItems: 'flex-end' }]}>
 			<View
@@ -83,13 +89,21 @@ export const TimerHeader: FC<{
 			</View>
 
 			<View>
-				{!editable && (
+				{!editable ? (
 					<BottomTabHeaderRight
 						onPressEllipsis={onPressEllipsis}
 						onPressAdd={onPressAdd}
 						activeScreen={'alarm'}
 					/>
-				)}
+				) : Platform.OS === 'ios' ? (
+					<Pressable
+						ripple_raduis={27}
+						onPress={onDonePressed}
+						style={{ marginHorizontal: 16, paddingHorizontal: 6 }}
+					>
+						<Text>Done</Text>
+					</Pressable>
+				) : null}
 			</View>
 		</View>
 	);
