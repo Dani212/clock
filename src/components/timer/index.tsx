@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import { useNavigation, useTheme } from '@react-navigation/native';
 
-import { SafeAreaView } from 'react-native';
+import { KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native';
 
 import { styles } from 'styles';
 
@@ -14,8 +14,13 @@ import { EllipsisDropdown } from 'components';
 import { TimerBottomHalf } from './TimerBottom';
 
 import AddPresetComponent from './preset/AddPreset';
-import { useSelector } from 'react-redux';
-import { showEditPresetState } from 'reduxStore';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	openPresetEdit,
+	removeOrCheckAllPEI,
+	showEditPresetState,
+	updateEditable,
+} from 'reduxStore';
 import { TimerStopAlert } from './TimerStopAlert';
 import { TimerContext } from 'store';
 
@@ -24,6 +29,8 @@ const Index = () => {
 
 	const { navigate } = useNavigation();
 
+	const dispatch = useDispatch();
+
 	const showEditPreset = useSelector(showEditPresetState);
 
 	const [showPreset, setShowPreset] = useState(false);
@@ -31,12 +38,11 @@ const Index = () => {
 	const ellipsisRef = useRef<EddRefProps>(null);
 
 	const {
-		dispatch,
+		dispatch: contextDispatch,
 		state: { timerEnd: timerEnded },
 	} = useContext(TimerContext);
 
 	const onPressAdd = () => {
-		// addPresetRef.current?.open();
 		setShowPreset(true);
 	};
 
@@ -59,26 +65,34 @@ const Index = () => {
 	};
 
 	const closeAppPreset = () => {
-		setShowPreset(!true);
+		showEditPreset && dispatch(openPresetEdit(false));
+		setShowPreset(false);
+		dispatch(removeOrCheckAllPEI([]));
+		dispatch(updateEditable({ data: false, screen: 'timer' }));
 	};
 
 	const resetTimer = () => {
-		dispatch({ type: 'updateTimerEnded', payload: false });
-		dispatch({ type: 'updateTimerStart', payload: true });
+		contextDispatch({ type: 'updateTimerEnded', payload: false });
+		contextDispatch({ type: 'updateTimerStart', payload: true });
 	};
 
 	const stopOverTimer = () => {
-		dispatch({ type: 'updateTimerEnded', payload: false });
-		dispatch({ type: 'updateTimerStart', payload: false });
+		contextDispatch({ type: 'updateTimerEnded', payload: false });
+		contextDispatch({ type: 'updateTimerStart', payload: false });
 	};
 
 	return (
 		<SafeAreaView style={styles.container}>
 			<TimerHeader onPressAdd={onPressAdd} onPressEllipsis={onPressEllipsis} />
 
-			<TimerTop />
+			<KeyboardAvoidingView
+				style={{ flex: 1 }}
+				behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+			>
+				<TimerTop />
 
-			<TimerBottomHalf />
+				<TimerBottomHalf />
+			</KeyboardAvoidingView>
 
 			<EllipsisDropdown
 				listItem={['Edit preset tiemrs', 'Settings', 'Contact us']}
