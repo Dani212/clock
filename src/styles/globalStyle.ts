@@ -54,8 +54,6 @@ export const styles = StyleSheet.create({
 	header: {
 		width,
 		height: 60,
-		// paddingBottom: 12,
-		// backgroundColor: '#f44f',
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between',
