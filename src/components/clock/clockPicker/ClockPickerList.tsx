@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { FlatList, View } from 'react-native';
 
 import moment from 'moment';
 
 import { CityItemHeight, Timezones } from 'consts';
-// import { Text } from 'components';
 import CityItem from './CityItem';
+import BigList from 'react-native-big-list';
+import { Platform, View } from 'react-native';
 
 type Props = {
 	dark: boolean;
@@ -51,7 +51,6 @@ export class ClockPickerList extends Component<Props> {
 	};
 
 	// keyExtractor = (item: typeof Timezones[0]) => item.country_code;
-	keyExtractor = () => Math.random().toString(36).substr(2, 10);
 
 	getItemLayout = (_: unknown, index: number) => ({
 		length: CityItemHeight,
@@ -61,24 +60,32 @@ export class ClockPickerList extends Component<Props> {
 
 	render() {
 		return (
-			<FlatList
-				// data={Timezones}
-				windowSize={11}
-				disableVirtualization
-				initialNumToRender={13}
-				// maxToRenderPerBatch={15}
+			<BigList
 				data={this.props.country}
+				// placeholder
+				footerHeight={30}
+				scrollEventThrottle={1}
 				style={{ paddingTop: 18 }}
-				// updateCellsBatchingPeriod={25}
+				itemHeight={CityItemHeight}
 				renderItem={this.renderItem}
-				removeClippedSubviews={false}
-				keyExtractor={this.keyExtractor}
-				keyboardShouldPersistTaps={'always'}
-				onEndReached={this.props.onEndReached}
 				getItemLayout={this.getItemLayout}
-				extraData={[this.props.dark]}
+				// contentOffset={{ y: 100, x: 0 }}
+				decelerationRate={Platform.OS === 'ios' ? 'normal' : 0.81}
 				ListFooterComponent={() => <View style={{ height: 30 }} />}
 			/>
 		);
 	}
 }
+
+// data={Timezones}
+// windowSize={11}
+// disableVirtualization
+// updateCellsBatchingPeriod={25}
+// initialNumToRender={13}
+// maxToRenderPerBatch={15}
+// removeClippedSubviews={false}
+// keyExtractor={this.keyExtractor}
+// keyboardShouldPersistTaps={'always'}
+// onEndReached={this.props.onEndReached}
+// getItemLayout={this.getItemLayout}
+// extraData={[this.props.dark]}
