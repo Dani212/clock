@@ -20,7 +20,7 @@ import {
 } from 'reduxStore';
 
 import { TimerContext } from 'store';
-import { presetItemHeight } from 'consts';
+import { presetItemHeight, pressVibration } from 'consts';
 
 export const PresetsComponent: FC = () => {
 	const dispatch = useDispatch();
@@ -55,7 +55,7 @@ export const PresetsComponent: FC = () => {
 	}, [presetList]);
 
 	const onPresetItemLongPress = (id: string) => {
-		Vibration.vibrate(25);
+		Vibration.vibrate(pressVibration);
 
 		dispatch(updateEditable({ data: !editable, screen: 'timer' }));
 
