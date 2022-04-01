@@ -28,7 +28,7 @@ export const TimerCounter: FC = () => {
 
 				setCurrentTime((prev) => prev - 1000);
 
-				if (startTime < 0) {
+				if (startTime === 0) {
 					stopTimer();
 				}
 			}, 1000);
