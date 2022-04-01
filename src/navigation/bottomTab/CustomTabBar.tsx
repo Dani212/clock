@@ -192,7 +192,7 @@ export const MyTabBar = ({
 						>
 							<View
 								style={{
-									borderWidth: 2,
+									borderBottomWidth: 2,
 									borderBottomColor: isFocused
 										? pColor(dark).text
 										: 'transparent',
